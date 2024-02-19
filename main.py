@@ -100,7 +100,7 @@ def evaluate_accuracy(folder_path):
     gender_only_correct = 0  # Only gender correct
     age_only_correct = 0  # Only age correct
     incorrect_predictions = 0  # Neither gender nor age correct
-
+    print("\n")
     for file_name in os.listdir(folder_path):
         if not file_name.lower().endswith('.jpg'):
             continue  # Skip non-JPG files
@@ -137,8 +137,10 @@ def evaluate_accuracy(folder_path):
             incorrect_predictions += 1
 
         total_predictions += 1
+
+        print(f"{file_name}  gender guess: {correct_gender}, age guess: {correct_age}")
     
-    net_accuracy = (correct_predictions / total_predictions) * 100
+    net_accuracy = ((correct_predictions + age_only_correct*0.5 + gender_only_correct*0.5) / total_predictions) * 100
     age_accuracy = ((correct_predictions + age_only_correct) / total_predictions) * 100
     gender_accuracy = ((correct_predictions + gender_only_correct) / total_predictions) * 100
 
